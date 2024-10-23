@@ -16,7 +16,7 @@ function NewPost(props) {
   //   };
 
   return (
-    <form className="bg-purple-700 p-4 w-80 my-8 mx-auto rounded-md shadow-md">
+    <form className="bg-purple-700 p-4 w-80  mx-auto rounded-md shadow-md">
       <p>
         <label htmlFor="body" className="block mb-1 text-purple-100 font-bold">
           Text
@@ -38,7 +38,7 @@ function NewPost(props) {
           type="text"
           id="name"
           className="block w-full p-2 rounded-md border-none bg-purple-300 text-gray-800"
-          onChange={props.onAuthorChange}
+          onChange={props.onAuthrChange}
         ></input>
       </p>
     </form>
