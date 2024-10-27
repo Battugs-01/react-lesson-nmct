@@ -4,28 +4,36 @@ import NewPost from "./NewPost";
 import Post from "./Post.";
 
 function PostList({ isPosting, onStopPosting }) {
-  const [enteredBody, setEnteredBody] = useState([]);
-  const [author, setAuthor] = useState([]);
+  const [posts, setPosts] = useState([]);
 
-  function bodyChangeHandler(event) {
-    setEnteredBody(event.target.value);
+  function addPostHandler(postData) {
+    // setPosts([postData, ...posts]);
+    setPosts((prevPosts) => {
+      return [postData, ...prevPosts];
+    });
   }
 
   return (
     <>
       {isPosting && (
         <Modal onClose={onStopPosting}>
-          <NewPost
-            onBodyChange={bodyChangeHandler}
-            onAuthorChange={(event) => setAuthor(event.target.value)}
-            onCancel={onStopPosting}
-          />
+          <NewPost onCancel={onStopPosting} onAddPost={addPostHandler} />
         </Modal>
       )}
-      <ul className="list-none max-w-3xl my-4 mx-auto py-4 grid grid-cols-3 gap-4 justify-center ">
-        <Post author={author} body={enteredBody} />
-        <Post author="This is Battugs" body="Battugs is God" />
-      </ul>
+      {posts.length > 0 ? (
+        <ul className="list-none max-w-3xl my-4 mx-auto py-4 grid grid-cols-3 gap-4 justify-center ">
+          {posts.map((post) => (
+            <Post key={post.id} author={post.author} body={post.body} />
+          ))}
+        </ul>
+      ) : (
+        <>
+          <p className="text-center text-2xl text-[#a990fb]">No posts yet</p>
+          <p className="text-center text-2xl text-[#a990fb]">
+            Start adding some !!
+          </p>
+        </>
+      )}
     </>
   );
 }

@@ -1,6 +1,32 @@
-function NewPost({ onBodyChange, onAuthorChange, onCancel }) {
+import { useState } from "react";
+
+function NewPost({ onCancel, onAddPost }) {
+  const [enteredBody, setEnteredBody] = useState([]);
+  const [author, setAuthor] = useState([]);
+
+  function bodyChangeHandler(event) {
+    setEnteredBody(event.target.value);
+  }
+
+  function onAuthorChange(event) {
+    setAuthor(event.target.value);
+  }
+
+  function sumbitHandler(event) {
+    event.preventDefault();
+    const data = {
+      body: enteredBody,
+      author: author,
+    };
+    onAddPost(data);
+    onCancel();
+  }
+
   return (
-    <form className="bg-purple-700 p-4 w-80  mx-auto rounded-md shadow-md">
+    <form
+      className="bg-purple-700 p-4 w-80  mx-auto rounded-md shadow-md"
+      onSubmit={sumbitHandler}
+    >
       <p>
         <label htmlFor="body" className="block mb-1 text-purple-100 font-bold">
           Text
@@ -10,7 +36,7 @@ function NewPost({ onBodyChange, onAuthorChange, onCancel }) {
           required
           rows={3}
           className="block w-full p-2 rounded-md border-none bg-purple-300 text-gray-800"
-          onChange={onBodyChange}
+          onChange={bodyChangeHandler}
         ></textarea>
       </p>
       <p>
